@@ -29,7 +29,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 
-
 class CalendarFragment : Fragment() {
 
     private val today = LocalDate.now()
@@ -85,9 +84,9 @@ class CalendarFragment : Fragment() {
 
         // calendar setup
         val currentMonth = YearMonth.now()
-        var plusMonth = 0
-        if (today.monthValue != today.minusDays(6).monthValue) plusMonth = 1
-        binding.calendar.setup(currentMonth, currentMonth.plusMonths(plusMonth.toLong()), daysOfWeek.first())
+        var startMonth = currentMonth
+        if (today.monthValue > today.minusDays(6).monthValue) startMonth = startMonth.minusMonths(1)
+        binding.calendar.setup(startMonth, currentMonth, daysOfWeek.first())
         binding.calendar.scrollToDate(today.minusDays(14))
 
         class DayViewContainer(view: View) : ViewContainer(view) {
